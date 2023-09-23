@@ -13,7 +13,7 @@ datasource db {
 model legalServiceProviders {
   id                String    @id @default(uuid())
   name              String
-  emailId           String
+  emailId           String    @unique
   password          String
   location          String
   yearsOfExperience Float
@@ -26,10 +26,11 @@ model legalServiceProviders {
 model user {
   id         String    @id @default(uuid())
   name       String
-  emailId    String
+  emailId    String    @unique
   password   String
   occupation String
   age        Float
+  language   String @default("english")
   createdAt  DateTime  @default(now())
   reviews    reviews[]
 }
