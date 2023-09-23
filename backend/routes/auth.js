@@ -4,7 +4,7 @@ const { PrismaClient } = require('@prisma/client')
 const { body, validationResult } = require('express-validator')
 const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs')
-// var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 // const fetchUser = require("../middleware/fetchUser")
 
 
@@ -73,59 +73,74 @@ router.post('/createlegalserviceprovider', [
     }
 });
 
+router.post('/login/user', [
+    body('emailId', 'Enter a valid email').isEmail(),
+    body('password', 'Password cannot be blank').notEmpty(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
-//route at /api/auth/login, logging in a user and sending a jwt token
-// router.post('/login', [
-//     body('email', 'enter valid email').isEmail(),
-//     body('password', 'cannot be blank').exists()
-// ], async (req, res) => {
-//     const errors = validationResult(req)
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ error: errors.array() })
-//     }
+    const { emailId, password } = req.body;
+    try {
+        const user = await prisma.user.findUnique({ where: { emailId } });
 
-//     const { email, password } = req.body
-//     try {
-//         const user = await prisma.user.findUnique({ where: { email } })
+        if (!user) {
+            return res.status(400).json({ error: "Wrong credentials" });
+        }
 
-//         if (!user) {
-//             return res.status(400).json({ "error": "wrong credentials" })
-//         }
+        const passwordCompare = await bcrypt.compare(password, user.password);
 
-//         const passwordCompare = await bcrypt.compare(password, user.password)
+        if (!passwordCompare) {
+            return res.status(400).json({ error: "Wrong credentials" });
+        }
 
-//         if (!passwordCompare) {
-//             return res.status(400).json({ "error": "wrong credential" })
-//         }
+        // Generate a JWT token
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
 
-//         const data = { user: { id: user.id } }
-//         const authToken = jwt.sign(data, process.env.JWT_SECRET)
-//         res.json({ "jwt": authToken })
-//     } catch (error) {
-//         console.error(error)
-//         res.status(500).json("error")
-//     }
-// })
+        // Return user ID and token in the response
+        res.json({ userId: user.id, token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.post('/login/legalserviceprovider', [
+    body('emailId', 'Enter a valid email').isEmail(),
+    body('password', 'Password cannot be blank').notEmpty(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { emailId, password } = req.body;
+    try {
+        const user = await prisma.legalServiceProviders.findUnique({ where: { emailId } });
+
+        if (!user) {
+            return res.status(400).json({ error: "Wrong credentials" });
+        }
+
+        const passwordCompare = await bcrypt.compare(password, user.password);
+
+        if (!passwordCompare) {
+            return res.status(400).json({ error: "Wrong credentials" });
+        }
+
+        // Generate a JWT token
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+
+        // Return user ID and token in the response
+        res.json({ userId: user.id, token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 
-// // get logged in user details at /api/auth/getid login requries
-// router.post('/getid', fetchUser, async (req, res) => {
-//     try {
-//         var userId = req.user.id
-//         const user = await prisma.user.findUnique({
-//             where: {
-//                 id: userId
-//             },
-//             select: {
-//                 id: true,
-//                 email: true,
-//                 name: true
-//             }
-//         })
-//         res.json(user)
-//     } catch (error) {
-//         console.log(error.message)
-//         res.status(500).json({ "error": "internal error" })
-//     }
-// })
+
 module.exports = router
