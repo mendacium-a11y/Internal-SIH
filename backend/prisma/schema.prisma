@@ -11,20 +11,23 @@ datasource db {
 }
 
 model legalServiceProviders {
-  id                String         @id @default(uuid())
+  id                String    @id @default(uuid())
   name              String
+  emailId           String
+  password          String
   location          String
   yearsOfExperience Float
+  quickService      Boolean
   barAssociation    String?
-  createdAt         DateTime       @default(now())
+  createdAt         DateTime  @default(now())
   reviews           reviews[]
-  quickServices     quickService[]
-  areas             String
 }
 
 model user {
   id         String    @id @default(uuid())
   name       String
+  emailId    String
+  password   String
   occupation String
   age        Float
   createdAt  DateTime  @default(now())
@@ -40,15 +43,3 @@ model reviews {
   user                   user                  @relation(fields: [userId], references: [id])
   userId                 String
 }
-
-model quickService {
-  id                     String                @id @default(uuid())
-  name                   String
-  location               String
-  yearsOfExperience      Float
-  barAssociation         String?
-  createdAt              DateTime              @default(now())
-  legalServiceProvider   legalServiceProviders @relation(fields: [legalServiceProviderId], references: [id])
-  legalServiceProviderId String
-}
-
