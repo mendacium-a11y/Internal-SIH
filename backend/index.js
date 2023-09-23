@@ -10,7 +10,7 @@ app.use(express.json())
 
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/review',require('./routes/review'))
-// app.use('/api/chat',require('./routes/notes'))
+app.use('/api/chat',require('./routes/ai'))
 
 
 

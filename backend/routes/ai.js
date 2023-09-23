@@ -9,6 +9,37 @@ const verifyToken = require("../middleware/fetchUser")
 
 const fetch = require('node-fetch');
 
+
+const airesponse = async (question, lang) => {
+
+    const url = 'https://chatgpt-best-price.p.rapidapi.com/v1/chat/completions';
+    const options = {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'X-RapidAPI-Key': 'f6ceb926aamsh7f92b724d064652p19513ajsn0066cf168aaa',
+            'X-RapidAPI-Host': 'chatgpt-best-price.p.rapidapi.com'
+        },
+        body: {
+            model: 'gpt-3.5-turbo',
+            messages: [
+                {
+                    role: 'user',
+                    content: question
+                }
+            ]
+        }
+    };
+
+    try {
+        const response = await fetch(url, options);
+        const result = await response.text();
+        return translate(JSON.parse(result), lang) 
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 const translate = async (text, lang) => {
     console.log("invoked")
     const encodedParams = new URLSearchParams();
@@ -52,69 +83,24 @@ const translate = async (text, lang) => {
 //     }
 // };
 
-router.post('/addreview', verifyToken, async (req, res) => {
+
+router.get('/response', verifyToken, async (req, res) => {
     try {
-        const { legalServiceProviderId, stars, review } = req.body;
+        const { question } = req.body;
         const userId = req.userId;
 
-        // Check if the user exists
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
+        const language = await prisma.user.findUnique({
+            where: { userId },
+            select: { language: true }
         });
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
-
-        // Check if the legal service provider exists
-        const legalServiceProvider = await prisma.legalServiceProviders.findUnique({
-            where: { id: legalServiceProviderId },
-        });
-
-        if (!legalServiceProvider) {
-            return res.status(404).json({ message: 'Legal Service Provider not found.' });
-        }
-
-        // Create a new review
-        const newReview = await prisma.reviews.create({
-            data: {
-                stars,
-                review,
-                legalServiceProvider: { connect: { id: legalServiceProviderId } },
-                user: { connect: { id: userId } },
-            },
-        });
-
-        res.status(201).json(newReview);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
-
-router.get('/getreviews', verifyToken, async (req, res) => {
-    try {
-        const { legalServiceProviderId } = req.body;
-        const userId = req.userId;
-
-        const reviews = await prisma.reviews.findMany({
-            where: { legalServiceProviderId },
-            include: {
-                user: {
-                    select: {
-                        name: true,    // Include the name field
-                        emailId: true,
-                        language: true, // Include the emailId field
-                    },
-                },
-            },
-        });
-        console.log(reviews)
-        for (let i = 0; i < reviews.length; i++) {
-            reviews[i].review = await translate(reviews[i].review, reviews[i].user.language);
-        }
-
         
+        const response = await airesponse(question, language.language)
+
+        // for (let i = 0; i < reviews.length; i++) {
+        //     reviews[i].review = await translate(reviews[i].review, "hi");
+        // }
+
+
         res.status(200).json(reviews);
     } catch (error) {
         res.status(500).json({ message: 'Internal server error.' });
