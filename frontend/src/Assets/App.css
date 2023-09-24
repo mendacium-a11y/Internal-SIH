@@ -1,0 +1,15 @@
+.navHeading{
+    font-weight: bolder;
+    font-size: x-large;
+    font-family: 'Rubik', sans-serif;
+}
+
+.navItem{
+    font-family: 'Rubik', sans-serif;
+}
+
+.navItem:hover{
+    color: white;
+    scale: 1.1;
+    transition: all 150ms ease-in-out;
+}
