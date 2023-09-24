@@ -3,7 +3,7 @@ import userContext from "../context/user/UserContext";
 
 const QuickService = () => {
     const context = useContext(userContext);
-    const { user, professionals } = context;
+    const { professionals } = context;
     const [selectedLocation, setSelectedLocation] = useState(null); // Set initial location to null
 
     const handleLocationChange = (event) => {
@@ -12,11 +12,10 @@ const QuickService = () => {
     };
 
     return (
-        <div className='p-3'>
-            <div className='text-center'><h2>Rapid Serve</h2></div>
-        
-            <div className='container'>
-                <div className="dropdown">
+        <div className='p-3 container'>
+            <div className='text-center'><h2>People Near You</h2></div>
+            <div>
+            <div className="dropdown">
                     <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Location
                     </button>
@@ -27,9 +26,10 @@ const QuickService = () => {
                         <li><a className="dropdown-item" href="#" onClick={handleLocationChange}>Chennai</a></li>
                     </ul>
                 </div>
-
+            </div>
+            <div className='container'>
                 {professionals.map((chat) => {
-                    if ((selectedLocation === null || selectedLocation === chat.location) && chat.quickService === true) {
+                    if (selectedLocation === null || selectedLocation === chat.location) { // Check if location is null or matches professional's location
                         return (
                             <div className="card my-4" key={chat.id}>
                                 <div className="card-body">

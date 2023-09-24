@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react'
-import { redirect } from "react-router-dom";
 import UserContext from "../context/user/UserContext";
 import Chats from '../Components/Chats';
 
@@ -7,12 +6,12 @@ const ChatDispaly = () => {
 
   const [input, setinput] = useState("")
   const context = useContext(UserContext);
-  const { user } = context;
+  const { user, getchat } = context;
   
   const loginSubmit = (e) => {
     e.preventDefault()
-    console.log("Clicked")
-    console.log(input)
+    
+    getchat(input)
   }
 
   const onchange = (e) => {

@@ -7,8 +7,8 @@ const NavbarMain = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-dark pt-3">
-        <div className="container-fluid">
+      <nav className="navbar navbar-expand-lg bg-dark ">
+        <div className="container-fluid mt-2 ms-3">
           <Link className="navbar-brand text-light" to="/"><h2>LegalBuddy</h2></Link>
           <button className="navbar-toggler border-1 border-light " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             {/* <span className="navbar-toggler-icon text-light"></span> */}
@@ -17,16 +17,14 @@ const NavbarMain = () => {
             </svg>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link text-light" href="#">Legal</a>
+            <ul className="navbar-nav ms-3">
+              <li className="nav-item  mx-3 d-flex align-items-center">
+                <Link className="navbar-brand text-light " to="/rapidserve"><p className=''>Rapid Serve</p></Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link text-light" href="#">Pricing</a>
+              <li className="nav-item mx-3 d-flex align-items-center">
+                <Link className="navbar-brand text-light" to="/peoplenearme"><p>People Near You</p></Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
+              
             </ul>
           </div>
         </div>
