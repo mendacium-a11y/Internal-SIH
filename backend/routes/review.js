@@ -20,7 +20,7 @@ const translate = async (text, lang) => {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            // 'X-RapidAPI-Key': 'f6ceb926aamsh7f92b724d064652p19513ajsn0066cf168aaa',
+            'X-RapidAPI-Key': env(TRANSLATE_API_KEY),
             'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
         },
         body: encodedParams

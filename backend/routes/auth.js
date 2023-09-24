@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator')
 const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken');
-// const fetchUser = require("../middleware/fetchUser")
+const verifyToken = require("../middleware/fetchUser")
 
 
 //route to create a user
@@ -14,7 +14,8 @@ router.post('/createuser', [
     body('emailId', 'enter a valid email').isEmail(),
     body('password', 'password must be at least 5 characters').isLength({ min: 5 }),
     body('occupation', 'enter occupation').isLength({ min: 3 }),
-    body('age', 'enter age').isLength({ min: 1 })
+    body('age', 'enter age').isLength({ min: 1 }),
+    body('language', 'enter language').isLength({ min: 2 }),
 ], async (req, res) => {
     // storing the output of the validation requests
     const errors = validationResult(req);
@@ -25,14 +26,14 @@ router.post('/createuser', [
     // trying to update the db with the data sent
     try {
         // destructuring the request using the correct key names
-        const { name, emailId, password, occupation, age } = req.body;
+        const { name, emailId, password, occupation, age, language } = req.body;
 
         const hashedSaltedPassword = bcrypt.hashSync(password, 10);
 
 
 
         // updating the db with data
-        const newUser = await prisma.user.create({ data: { name, emailId, password: hashedSaltedPassword, occupation, age } });
+        const newUser = await prisma.user.create({ data: { name, emailId, password: hashedSaltedPassword, occupation, age, language } });
         console.log(newUser);
         res.status(200).json(req.body);
     } catch (error) {
@@ -73,7 +74,7 @@ router.post('/createlegalserviceprovider', [
     }
 });
 //route for user login
-router.post('/login/user', [
+router.post('/login/user',  [
     body('emailId', 'Enter a valid email').isEmail(), // emailId should be an email
     body('password', 'Password cannot be blank').notEmpty(),// password cannot be blank
 ], async (req, res) => {
@@ -145,6 +146,20 @@ router.post('/login/legalserviceprovider', [
         res.json({ userId: user.id, token });
     } catch (error) {
         console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+//route to get all provider detaills
+router.get('/getallproviders', verifyToken ,async (req, res) => {
+    try {
+        const userId = req.userId;
+        //checking if the user exists and has logged in 
+        if (!userId) {
+            return res.status(400).json({ error: "Wrong credentials" });
+        }
+        const allproviders = await prisma.legalServiceProviders.findMany();
+        res.status(200).json(allproviders);
+    } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

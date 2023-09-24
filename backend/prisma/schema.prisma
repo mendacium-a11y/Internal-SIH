@@ -30,7 +30,7 @@ model user {
   password   String
   occupation String
   age        Float
-  language   String @default("english")
+  language   String 
   createdAt  DateTime  @default(now())
   reviews    reviews[]
 }
