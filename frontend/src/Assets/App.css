@@ -2,9 +2,11 @@
     font-weight: bolder;
     font-size: x-large;
     font-family: 'Rubik', sans-serif;
+    letter-spacing: 2px;
 }
 
 .navItem{
+    letter-spacing: 1px;
     font-family: 'Rubik', sans-serif;
 }
 

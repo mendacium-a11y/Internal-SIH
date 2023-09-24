@@ -7,7 +7,7 @@ function NavbarMain() {
   return (
     <Navbar expand="lg" className="bg-dark border-bottom border-body" data-bs-theme="dark">
       <Container fluid>
-        <Navbar.Brand className='navHeading' href="#home">LegalBuddy</Navbar.Brand>
+        <Navbar.Brand className='navHeading ps-4 pe-3' href="#home">LegalBuddy</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
