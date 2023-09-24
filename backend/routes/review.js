@@ -114,13 +114,19 @@ router.get('/getreviews', verifyToken, async (req, res) => {
             reviews[i].review = await translate(reviews[i].review, reviews[i].user.language);
         }
 
-        
+
         res.status(200).json(reviews);
     } catch (error) {
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
 
-
+// router.get('/translate',  async (req, res) => {
+//     const message = req.body.message;
+//     console.log(message)
+//     // res.send(200)
+//     const output = await translate(message, "hi");
+//     res.status(200).json({ output });
+// })
 module.exports = router;
 
