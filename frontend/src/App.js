@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import NavbarMain from './Components/Navbar';
+import { Route, Routes } from 'react-router-dom';
+import Login from './Pages/Login';
 
-function App() {
+import ChatDispaly from './Pages/Chat';
+import QuickService from './Pages/QuickService';
+
+
+
+
+function ColorSchemesExample() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavbarMain />
+
+      <Routes>
+        <Route path='/' element={<ChatDispaly />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/rapidServe' element={<QuickService />} />
+
+      </Routes>
+
+
+    </>
   );
 }
 
-export default App;
+export default ColorSchemesExample;
