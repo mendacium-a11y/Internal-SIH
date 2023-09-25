@@ -3,13 +3,14 @@ import userContext from "../context/user/UserContext";
 
 const QuickService = () => {
     const context = useContext(userContext);
-    const { user, professionals } = context;
+    const { user, proffesional } = context;
     const [selectedLocation, setSelectedLocation] = useState(null); // Set initial location to null
 
     const handleLocationChange = (event) => {
         const location = event.target.innerText;
         setSelectedLocation(location === "All" ? null : location); // Set selected location to null if "All" is chosen
     };
+    
 
     return (
         <div className='p-3'>
@@ -28,8 +29,8 @@ const QuickService = () => {
                     </ul>
                 </div>
 
-                {professionals.map((chat) => {
-                    if ((selectedLocation === null || selectedLocation === chat.location) && chat.quickService === true) {
+                {proffesional.map((chat) => {
+                    if ((selectedLocation === null || selectedLocation === chat.location) && chat.quickService === true && user !== null ) {
                         return (
                             <div className="card my-4" key={chat.id}>
                                 <div className="card-body">

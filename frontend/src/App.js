@@ -6,10 +6,6 @@ import QuickService from './Pages/QuickService';
 import UserState from './context/user/UserState';
 import NearMe from './Pages/NearMe';
 
-
-
-
-
 function ColorSchemesExample() {
   return (
     <>
@@ -21,7 +17,6 @@ function ColorSchemesExample() {
           <Route path='/login' element={<Login />} />
           <Route path='/rapidserve' element={<QuickService />} />
           <Route path='/peoplenearme' element={<NearMe />} />
-
         </Routes>
       </UserState>
     </>

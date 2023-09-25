@@ -74,7 +74,7 @@ router.post('/createlegalserviceprovider', [
     }
 });
 //route for user login
-router.post('/login/user',  [
+router.post('/login/user', [
     body('emailId', 'Enter a valid email').isEmail(), // emailId should be an email
     body('password', 'Password cannot be blank').notEmpty(),// password cannot be blank
 ], async (req, res) => {
@@ -150,7 +150,7 @@ router.post('/login/legalserviceprovider', [
     }
 });
 //route to get all provider detaills
-router.get('/getallproviders', verifyToken ,async (req, res) => {
+router.get('/getallproviders', verifyToken, async (req, res) => {
     try {
         const userId = req.userId;
         //checking if the user exists and has logged in 
@@ -161,6 +161,86 @@ router.get('/getallproviders', verifyToken ,async (req, res) => {
         res.status(200).json(allproviders);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+const llmCall = async (question) => {
+    const url = 'https://chatgpt-best-price.p.rapidapi.com/v1/chat/completions';
+    const options = {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'X-RapidAPI-Key': process.env.AI_KEY,
+            'X-RapidAPI-Host': 'chatgpt-best-price.p.rapidapi.com'
+        },
+        body: JSON.stringify({
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": question
+                }
+            ]
+        })
+    };
+
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json(); // Parse the response as JSON
+        // console.log(result);
+        const responseMessage = result.choices[0].message.content;
+        return responseMessage
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const translate = async (text, lang) => {
+    console.log("invoked")
+    const encodedParams = new URLSearchParams();
+    encodedParams.set('source_language', 'en');
+    encodedParams.set('target_language', lang);
+    encodedParams.set('text', text);
+    const url = 'https://text-translator2.p.rapidapi.com/translate';
+    const options = {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'X-RapidAPI-Key': process.env.TRANSLATE_API_KEY,
+            'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
+        },
+        body: encodedParams
+    };
+
+    try {
+        const response = await fetch(url, options);
+        const result = await response.text();
+        console.log(result);
+        return JSON.parse(result).data.translatedText;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+router.post('/response', async (req, res) => {
+    try {
+        console.log(req.body)
+
+        //destructuring the reqeust
+        const { message, userId } = req.body; // Use req.query to get query parameters
+        // console.log(lang)
+        // console.log(`question ${message} `);
+        const prompt = `${message}, give answer with respect to the laws and the justice system of india, `
+        //calling the llm function that calls the ai
+        const response = await llmCall(message);
+
+        //calling the translate function that translates the response
+        // const translated = await translate(response, "hi");
+        res.status(200).json({ response: response }); // Send a response to the client
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error.' });
     }
 });
 

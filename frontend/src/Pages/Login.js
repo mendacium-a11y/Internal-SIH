@@ -1,19 +1,27 @@
 import React, { useState, useContext } from 'react';
 import userContext from "../context/user/UserContext";
 
-
 const Login = () => {
   const context = useContext(userContext);
-  const { getuser } = context
+  const { getuser, proffesional } = context;
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     // Sending the credentials to the backend for login
     getuser(credentials.email, credentials.password)
-
-
+      .then(() => {
+        console.log(proffesional);
+        // Display a success alert
+        alert('Login successful!');
+      })
+      .catch((error) => {
+        console.error(error);
+        // Display an error alert
+        alert('Login failed. Please check your credentials and try again.');
+      });
   }
 
   const onChange = (e) => {

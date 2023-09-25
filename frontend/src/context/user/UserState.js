@@ -5,117 +5,124 @@ const UserState = (props) => {
 
     const host = "http://localhost:5050"
     const [user, setUser] = useState(null)
-    // const user = {
-    //     "userId": "e414adfc-3eae-46e8-b925-6d1a78f1bd4c",
-    //     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlNDE0YWRmYy0zZWFlLTQ2ZTgtYjkyNS02ZDFhNzhmMWJkNGMiLCJpYXQiOjE2OTU1NTUxMjd9.UPfBL0XvvnD7PWT_h0cbfHz1XubXyLRWTDF6pCjP5fk",
-    //     "language": "english",
-    //     "location":"Chennai"
-    // }
     const [aiChat, setAiChat] = useState([{
         "message": "Hello, how can I help with your legal needs?",
         "user": "ai"
     }])
-    // const aiChat = [
-    //     {
-    //         "message": "Hello, how can I help with your legal needs?",
-    //         "user": "ai"
-    //     },
-    //     {
-    //         "message": "I want to register a company in Delhi, India.",
-    //         "user": "user"
-    //     },
-    //     {
-    //         "message": "A lawyer can help guide you through the process",
-    //         "user": "ai"
-    //     }
-    // ]
+
     // const [proffesional, setProffesional] = useState(null)
-    const professionals = [
+    const proffesional = [
         {
-            "name": "Rahul",
+            "id": "4f40f49e-2d3e-43b9-a6fa-5694e4ea67d5",
+            "name": "rahul",
+            "emailId": "rahul@g.com",
+            "password": "$2a$10$1wfW7p.9.p1RIH61.Uf0m.wIDNWrO6i.a6GLJaES9dbDvalI2lsw2",
+            "location": "delhi",
+            "yearsOfExperience": 5.3,
+            "quickService": false,
+            "barAssociation": "delhi",
+            "createdAt": "2023-09-23T13:42:32.005Z"
+        },
+        {
+            "id": "b8c9dada-2390-4e8c-b220-d8f5fa7c6387",
+            "name": "rishabh",
+            "emailId": "rishabh@gmail.com",
+            "password": "$2a$10$k965AOojh1/r7YYLO7m6LOu7/TfUSpnjGoYGaF1f1Q6xZpScRoQHG",
+            "location": "indore",
+            "yearsOfExperience": 2.7,
+            "quickService": false,
+            "barAssociation": "delhi",
+            "createdAt": "2023-09-23T14:45:38.716Z"
+        },
+        {
+            "id": "741387ad-df68-4810-aaa0-a283037e56c0",
+            "name": "ayush kumar",
+            "emailId": "akumar@gmail.com",
+            "password": "$2a$10$5Aj3wWpE4jsJdbEkQQNTBOVIJU8WKIlmi/HOEph/ntq6DcEvUgISq",
+            "location": "Kolkata",
+            "yearsOfExperience": 3.4,
+            "quickService": true,
+            "barAssociation": "Kolkata",
+            "createdAt": "2023-09-24T15:13:17.812Z"
+        },
+        {
+            "id": "9fb9a471-1559-4c00-b349-b5c1fa0ef115",
+            "name": "yash gupta",
+            "emailId": "yashg@gmail.com",
+            "password": "$2a$10$/HMb.Y8cLdFYjaVQ46TjzOi0wZoKJoxR0G31UuE8gS2hxO3hLnlxO",
+            "location": "Chennai",
+            "yearsOfExperience": 1.8,
+            "quickService": true,
+            "barAssociation": "CHennai",
+            "createdAt": "2023-09-24T15:13:51.462Z"
+        },
+        {
+            "id": "797d7609-9f06-494a-af72-9441261b3b57",
+            "name": "Chaitanya Gupta",
+            "emailId": "cg@gmail.com",
+            "password": "$2a$10$KpbCeMj1kAcLDL6AJNUlaOz48NY.xHrQe65VwyE5lvrwtGkilv9Nm",
             "location": "Delhi",
-            "yearsOfExperience": "5",
-            "barAssociation": true,
-            "occupation": "Lawyer",
-            "quickService": true
+            "yearsOfExperience": 1.8,
+            "quickService": true,
+            "barAssociation": "Delhi",
+            "createdAt": "2023-09-24T15:14:29.351Z"
         },
         {
-            "name": "Priya",
-            "location": "Mumbai",
-            "yearsOfExperience": "8",
-            "barAssociation": false,
-            "occupation": "Mediator",
-            "quickService": false
+            "id": "24320c4d-2e85-4935-aa8a-5d79e6d2a378",
+            "name": "Dhruv Singh",
+            "emailId": "ds@gmail.com",
+            "password": "$2a$10$oU62a26E3WAdLfQwjslMn.Lmtc4uh4vx.pEQ.0TxCAcCb5f1At2/K",
+            "location": "Jaipur",
+            "yearsOfExperience": 1.8,
+            "quickService": false,
+            "barAssociation": "Jaipur",
+            "createdAt": "2023-09-24T15:14:59.387Z"
         },
         {
-            "name": "Amit",
-            "location": "Chennai",
-            "yearsOfExperience": "3",
-            "barAssociation": true,
-            "occupation":"Arbitrators",
-            "quickService": true
-        },
-        {
-            "name": "Sneha",
-            "location": "Chennai",
-            "yearsOfExperience": "6",
-            "barAssociation": false,
-            "occupation":"Notaries",
-            "quickService": false
-        },
-        {
-            "name": "Raj",
-            "location": "Hyderabad",
-            "yearsOfExperience": "10",
-            "barAssociation": true,
-            "occupation": "Lawyer",
-            "quickService": true
-        },
-        {
-            "name": "Neha",
-            "location": "Chennai",
-            "yearsOfExperience": "4",
-            "barAssociation": false,
-            "occupation": "Mediator",
-            "quickService": false
-        },
-        {
-            "name": "Vikram",
-            "location": "Pune",
-            "yearsOfExperience": "7",
-            "barAssociation": true,
-            "occupation":"Notaries",
-            "quickService": true
-        },
-        {
-            "name": "Sachin",
-            "location": "Chennai",
-            "yearsOfExperience": "2",
-            "barAssociation": false,
-            "occupation":"Arbitrators",
-            "quickService": false
-        },
-        {
-            "name": "Anjali",
-            "location": "Chennai",
-            "yearsOfExperience": "9",
-            "barAssociation": true,
-            "occupation": "Mediator",
-            "quickService": true
-        },
-        {
-            "name": "Aryan",
+            "id": "35920080-f6e6-4714-9e3a-df1f0c481261",
+            "name": "Sachin Rastogi",
+            "emailId": "sr@gmail.com",
+            "password": "$2a$10$B2zICdhaLF59TgRs3YXpROjUIgab9Q7dqJHgumyRW7NAM0RkXdaaK",
             "location": "Lucknow",
-            "yearsOfExperience": "5",
-            "barAssociation": false,
-            "occupation":"Arbitrators",
-            "quickService": false
+            "yearsOfExperience": 1.8,
+            "quickService": true,
+            "barAssociation": "Lucknow",
+            "createdAt": "2023-09-24T15:15:25.601Z"
+        },
+        {
+            "id": "adeee81e-4b18-45b9-a41e-45a99da85047",
+            "name": "Aparajita Sheoran",
+            "emailId": "as@gmail.com",
+            "password": "$2a$10$2YvE8HAIz..bv1vAEXIDteZ1EIABLSxflH.rFtZwKDL39nrii2gPq",
+            "location": "Delhi",
+            "yearsOfExperience": 1.8,
+            "quickService": true,
+            "barAssociation": "Delhi",
+            "createdAt": "2023-09-24T15:15:51.303Z"
+        },
+        {
+            "id": "35c595a9-321f-4716-85d2-d149fd9f8602",
+            "name": "Ishan Kumar",
+            "emailId": "ik@gmail.com",
+            "password": "$2a$10$J6LMwVnOauFsWSyF8CPtx.oKp0nm9F9VDB93xy.FGfVJ9M5Ok.g8u",
+            "location": "Mumbai",
+            "yearsOfExperience": 1.8,
+            "quickService": false,
+            "barAssociation": "Mumbai",
+            "createdAt": "2023-09-24T15:16:27.625Z"
+        },
+        {
+            "id": "bdd8ebe9-e0dd-4521-9899-fbff9026c715",
+            "name": "Yash Bansal",
+            "emailId": "yb@gmail.com",
+            "password": "$2a$10$zxVkVMY2DDwchPHRQxYGv..UodDnNFmM9etnzYHFfQXFz8bDhvtRC",
+            "location": "Mumbai",
+            "yearsOfExperience": 6.6,
+            "quickService": true,
+            "barAssociation": "Mumbai",
+            "createdAt": "2023-09-24T15:16:44.732Z"
         }
     ]
-
-
-    // const [quickProviders, setQuickProviders] = useState(null)
-    const quickProviders = []
 
     const getuser = async (emailId, password) => {
         try {
@@ -126,6 +133,8 @@ const UserState = (props) => {
                 },
                 body: JSON.stringify({ emailId, password })
             });
+
+            getprovider()
 
             if (response.ok) {
                 const json = await response.json();
@@ -141,38 +150,38 @@ const UserState = (props) => {
 
 
     }
-
     const getchat = async (message) => {
-        // Create a new message object for the user's message
+        console.log(aiChat)
+        console.log(user)
         const userMessage = {
             message,
             user: "user"
-        };
-        console.log("get chat invokded")
-    
-        // Append the user's message to the aiChat state
-        setAiChat((aiChat) => [...aiChat, userMessage]);
-    
+        }
+
+        setAiChat(aiChat.concat(userMessage))
+        console.log("message added")
+
         try {
-            const response = await fetch(`${host}/api/chatbot`, {
+            const response = await fetch(`${host}/api/auth/response`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message, user: "userId" })
+                body: JSON.stringify({ message, user: user.userId })
             });
-    
+
             if (response.ok) {
+                console.log("message sent")
                 const json = await response.json();
-    
-                // Create a new message object for the AI's response
                 const aiResponse = {
-                    message: json.message,
+                    message: json.response,
                     user: "ai"
                 };
-    
-                // Append the AI's response to the aiChat state
-                setAiChat((aiChat) => [...aiChat, aiResponse]);
+                setAiChat(aiChat.concat(aiResponse))
+
+
+
+
             } else {
                 // Handle error response
                 console.error('Failed to fetch notes:', response.status, response.statusText);
@@ -180,16 +189,37 @@ const UserState = (props) => {
         } catch (error) {
             console.error('Error fetching notes:', error);
         }
-    };
-    
-    
+    }
 
+    const getprovider = async () => {
+        try {
+            const response = await fetch(`${host}/api/auth/getallproviders`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": user.token
+                },
+            });
+            if (response.ok) {
+                const json = await response.json();
+                // setProffesional(json)
+            } else {
+                // Handle error response
+                console.error('Failed to fetch notes:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching notes:', error);
+        }
+    }
     useEffect(() => {
         console.log(user);
-    }, [user]);
+        console.log(proffesional);
+        console.log(aiChat);
+    }, [user, proffesional, aiChat]);
+
 
     return (
-        <UserContext.Provider value={{ getuser, user, aiChat, professionals, getchat }}>
+        <UserContext.Provider value={{ getuser, user, aiChat, proffesional, getprovider, getchat }}>
             {props.children}
         </UserContext.Provider>
     )

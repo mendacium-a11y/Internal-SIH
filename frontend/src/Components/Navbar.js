@@ -24,6 +24,9 @@ const NavbarMain = () => {
               <li className="nav-item mx-3 d-flex align-items-center">
                 <Link className="navbar-brand text-light" to="/peoplenearme"><p>People Near You</p></Link>
               </li>
+              <li className="nav-item mx-3 d-flex align-items-center">
+                <Link className="navbar-brand text-light" to="/login"><p>Login</p></Link>
+              </li>
               
             </ul>
           </div>
